@@ -58,9 +58,23 @@ public class OtpAuthenticatorFactory implements AuthenticatorFactory, Configurab
         ProviderConfigProperty property;
         property = new ProviderConfigProperty();
         property.setName("otp.ttl");
-        property.setLabel("OTP Max Age");
+        property.setLabel("OTP time to live");
         property.setType(ProviderConfigProperty.STRING_TYPE);
-        property.setHelpText("Max age in seconds of the OTP.");
+        property.setHelpText("The validity of the OTP in seconds.");
+        configProperties.add(property);
+
+        property = new ProviderConfigProperty();
+        property.setName("otp.len");
+        property.setLabel("Length of the OTP");
+        property.setType(ProviderConfigProperty.STRING_TYPE);
+        property.setHelpText("Length of the OTP.");
+        configProperties.add(property);
+
+        property = new ProviderConfigProperty();
+        property.setName("otp.url");
+        property.setLabel("SMS/Email sending service URL");
+        property.setType(ProviderConfigProperty.STRING_TYPE);
+        property.setHelpText("SMS/Email sending service URL");
         configProperties.add(property);
     }
 
@@ -94,6 +108,4 @@ public class OtpAuthenticatorFactory implements AuthenticatorFactory, Configurab
     public void close() {
 
     }
-
-
 }
