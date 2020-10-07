@@ -24,7 +24,7 @@ public class OtpAuthenticator implements Authenticator {
     public void authenticate(AuthenticationFlowContext context) {
         logger.debug("authenticate called ... context = " + context);
 
-        String otp = getOtp();
+        String otp = getOtp(context);
         storeOtp(context, otp);
         sendOtp(context, otp);
 
@@ -32,10 +32,19 @@ public class OtpAuthenticator implements Authenticator {
         context.challenge(challenge);
     }
 
-	private String getOtp() {
-        double maxValue = Math.pow(10.0, 6);;
+	private String getOtp(AuthenticationFlowContext context) {
+    	int len = 6; // default to 6 digits
+    	String value = getConfig(context, "otp.len");
+        try {
+        	len = Integer.parseInt(value);
+        	if (len<2) len = 6; 
+        } catch(Exception e) { }
+		
+        double minValue = Math.pow(10.0, len - 1);;
+        double maxValue = Math.pow(10.0, len);;
         Random r = new Random();
-        long otp = (long)(r.nextFloat() * maxValue);
+        long otp = (long)(minValue + r.nextFloat() * (maxValue - minValue));
+        if (otp == (long)maxValue) otp = (long)maxValue - 1; 
         return Long.toString(otp);
     }
 
