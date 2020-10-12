@@ -15,5 +15,6 @@
 6. In "Browser-2FA" flow, click the "Actions" menu item of "Browser-2FA Forms" and "Add Execution".  Pick Sms/Email OTP
 
 7. In the newly added Sms/Email OTP execution, click the "Actions" menu item and "Config", configure the url to send SMS/Email
+Note: the request body is in the format of { "username":"admin", "otp":"2067" }
 
 8. go to the Bindings tab, change Browser flow to "Browser-2FA"
